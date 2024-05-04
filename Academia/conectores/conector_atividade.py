@@ -126,7 +126,7 @@ def new(atividade):
 
     result = run_sql(sql, values)
 
-    atividade.id = result[0]['id_atividade']
+    atividade.id_atividade = result[0]['id_atividade']
 
     return atividade
 
