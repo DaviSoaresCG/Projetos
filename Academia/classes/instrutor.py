@@ -6,5 +6,4 @@ class Instrutor:
         self.data_nascimento = data_nascimento
         self.endereco = endereco
         self.telefone = telefone
-        self.email = email
         self.id = id
