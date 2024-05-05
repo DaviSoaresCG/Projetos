@@ -38,7 +38,7 @@ def get_one(id):
 
     if result is not None:
         tipo_plano = plano.get_one(result["cod_tipo_plano"])
-        membro = Membro(result['Nome'],
+        membro = Membro(result['nome'],
                         result['sobrenome'],
                         result['data_nascimento'],
                         result['endereco'],
@@ -60,8 +60,8 @@ def get_activities(user_id):
 
     results = run_sql(sql, value)
 
-    for row in result:
-        tipo_plano = plano.get_one(result["cod_tipo_plano"])
+    for row in results:
+        tipo_plano = plano.get_one(row["cod_tipo_plano"])
 
         atividade = Atividade(row['nome'],
                               row['cod_instrutor'],
@@ -84,16 +84,18 @@ def get_all_active():
     results = run_sql(sql)
 
     for row in results:
-        tipo_plano = plano.get_one(result["cod_tipo_plano"])
+        tipo_plano = plano.get_one(row["cod_tipo_plano"])
 
         membro = Membro(row['nome'],
-                        row['cod_instrutor'],
-                        row['data'],
-                        row['duracao'],
-                        row['capacidade'],
+                        row['sobrenome'],
+                        row['data_nascimento'],
+                        row['endereco'],
+                        row['telefone'],
+                        row['email'],
                         tipo_plano,
+                        row['data_inicio'],
                         row['ativo'],
-                        row['id_atividade'])
+                        row['id_membro'])
         membros.append(membro)
     return membros
 
@@ -106,19 +108,20 @@ def get_all_inactive():
     results = run_sql(sql)
 
     for row in results:
-        tipo_plano = plano.get_one(result["cod_tipo_plano"])
+        tipo_plano = plano.get_one(row["cod_tipo_plano"])
 
         membro = Membro(row['nome'],
-                        row['cod_instrutor'],
-                        row['data'],
-                        row['duracao'],
-                        row['capacidade'],
+                        row['sobrenome'],
+                        row['data_nascimento'],
+                        row['endereco'],
+                        row['telefone'],
+                        row['email'],
                         tipo_plano,
+                        row['data_inicio'],
                         row['ativo'],
-                        row['id_atividade'])
+                        row['id_membro'])
         membros.append(membro)
     return membros
-
 # Função para cadastrar um novo membro
 def new(membro):
     sql = 'INSERT INTO webuser.TB_MEMBROS( nome, sobrenome, data_nascimento, endereco, telefone, email, cod_tipo_plano, data_inicio, ativo ) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) RETURNING *;'

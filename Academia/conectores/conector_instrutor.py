@@ -1,16 +1,15 @@
-from db.run_sql import run_sql
+from database.run_sql import run_sql
 from classes.instrutor import Instrutor
 from classes.atividade import Atividade
 
 #funcao para listar todos os instrutores
 def get_all():
-     
-     instrutores = []
+    instrutores = []
 
-     sql = 'select * from webuser.tb_intrutores'
-     results = run_sql(sql)
+    sql = 'select * from webuser.tb_intrutores'
+    results = run_sql(sql)
 
-     for row in results:
+    for row in results:
 
         instrutor = Instrutor(row['nome'],
                               row['sobrenome'],
@@ -20,7 +19,7 @@ def get_all():
                               row['id_instrutor'])
         
         instrutores.append(instrutor)
-return instrutores
+    return instrutores
 
 #funcao para retornar um instrutor
 def get_one(id):
@@ -28,7 +27,7 @@ def get_one(id):
     sql = 'select * from webuser.tb_intrutores where id_instrutor = %s'
     value = [id]
 
-    result = run_sql(sql, value)
+    result = run_sql(sql, value)[0]
 
     if result is not None:
         instrutor = Instrutor(result['nome'],
@@ -45,7 +44,7 @@ def get_activities(instructor_id):
     atividades = []
 
     sql = "select * from webuser.tb_atividades where cod_instrutor = %s"
-    values [instructor_id]
+    values = [instructor_id]
 
     results = run_sql(sql, values)
 

@@ -1,5 +1,5 @@
-import conectores.plano as plano
-from db.run_sql import run_sql
+import conectores.conector_plano as plano
+from database.run_sql import run_sql
 from classes.atividade import Atividade
 from classes.membro import Membro
 
@@ -99,16 +99,16 @@ def get_all_inactive():
 # Função para obter uma atividade ativa
 def get_one(id):
 
-    sql = 'select * from webuser.tb_atividades where id_atividade = %s and where ativo = true'
+    sql = 'select * from webuser.tb_atividades where id_atividade = %s and ativo = true'
     values = [id]
 
-    result = run_sql(sql, values)
+    result = run_sql(sql, values)[0]
 
     if result is not None:
-        tipo_plano = plano.get_one(result["tipo_plano"])
+        tipo_plano = plano.get_one(result["cod_tipo_plano"])
         
         atividade = Atividade(result["nome"],
-                              result["instrutor"],
+                              result["cod_instrutor"],
                               result["data"],
                               result["duracao"],
                               result["capacidade"],

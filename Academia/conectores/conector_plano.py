@@ -10,7 +10,7 @@ def get_all():
     results = run_sql(sql)
     
     for row in results:
-        tipo_plano = TipoPlano(row['Plano'], row['id'])
+        tipo_plano = TipoPlano(row['plano'], row['id_plano'])
         tipos_planos.append(tipo_plano)
 
     return tipos_planos
@@ -21,10 +21,10 @@ def get_one(id):
     sql = 'select * from webuser.tb_planos where id_plano = %s'
     value = [id]
 
-    result = run_sql(sql, value) [0]
+    result = run_sql(sql, value)[0]
 
     if result is not None:
-        tipo_plano = TipoPlano(result['Plano'], result['id'])
+        tipo_plano = TipoPlano(result['plano'], result['id_plano'])
 
     return tipo_plano
 
